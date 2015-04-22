@@ -4,15 +4,11 @@ module NIM where
 
 import Control.Exception
 
-main = do
-	putStrLn "Welcome to NIM\n"
-	humanMove newSet
-
 printBoard :: [Int] -> IO ()
 printBoard board = putStrLn (stringBoard board)
 
 stringBoard :: [Int] -> String
-stringBoard board = "1: " ++ stringSticks (board !! 0) ++ "\n2: " ++ stringSticks (board !! 1) ++ "\n3: " ++ stringSticks (board !! 2)
+stringBoard board = "\n1: " ++ stringSticks (board !! 0) ++ "\n2: " ++ stringSticks (board !! 1) ++ "\n3: " ++ stringSticks (board !! 2) ++ "\n"
 
 stringSticks :: Int -> String
 stringSticks 1 = "X"
@@ -30,6 +26,17 @@ sticksInRow row board
 	| row == 1 = board !! 0
 	| row == 2 = board !! 1
 	| row == 3 = board !! 2
+	| otherwise = 0
+
+makeMove :: [Int] -> Int -> Int -> Maybe [Int]
+makeMove board row sticks
+	| ((row < 1) || (row > 3)) = Nothing
+	| sticks > inRow = Nothing
+	| ((sticks > 0) && (sticks <= inRow)) = Just $ removeSticks row sticks board
+	| otherwise = Nothing
+	where
+		inRow = sticksInRow row board
+
 
 newSet :: [Int]
 newSet = [4,3,7]
@@ -38,13 +45,7 @@ gameOver :: [Int] -> Bool
 gameOver board
 	| sum board == 0 = True
 	| otherwise = False
-
-humanMove :: [Int] -> IO String
-humanMove board = do
-	printBoard board
-	value <- getInt
-	print (value == 2)
-	return "woiefh"
+	
 
 --getInt :: IO Int
 --getInt = do
@@ -57,14 +58,14 @@ humanMove board = do
 --		Right valid -> do
 --			return (read valid :: Int)
 
-getInt :: IO Int
-getInt = do
-	putStrLn "Enter a Number: "
+getInt :: String -> IO Int
+getInt message = do
+	putStrLn message
 	input <- getLine
 	case (reads input :: [(Int, String)]) of
 		[] -> do
 			putStrLn $ "Invalid input."
-			getInt
+			getInt message
 		[(n,_)] -> do
 			return n
 
