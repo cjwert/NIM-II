@@ -42,9 +42,31 @@ gameOver board
 humanMove :: [Int] -> IO String
 humanMove board = do
 	printBoard board
+	value <- getInt
+	print (value == 2)
 	return "woiefh"
 
-	
+--getInt :: IO Int
+--getInt = do
+--	putStrLn "Enter a Number: "
+--	input <- try getLine
+--	case input of
+--		Left (SomeException e) -> do
+--			putStrLn $ "Invalid input." ++ show e
+--			getInt
+--		Right valid -> do
+--			return (read valid :: Int)
+
+getInt :: IO Int
+getInt = do
+	putStrLn "Enter a Number: "
+	input <- getLine
+	case (reads input :: [(Int, String)]) of
+		[] -> do
+			putStrLn $ "Invalid input."
+			getInt
+		[(n,_)] -> do
+			return n
 
 
 --GRADING CRITERIA
