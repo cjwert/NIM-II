@@ -12,7 +12,9 @@ stringBoard board = "\n1: " ++ stringSticks (board !! 0) ++ "\n2: " ++ stringSti
 
 stringSticks :: Int -> String
 stringSticks 1 = "X"
+stringSticks 0 = ""
 stringSticks n = "X" ++ stringSticks (n - 1)
+
 
 removeSticks :: Int -> Int -> [Int] -> [Int]
 removeSticks row sticks board
