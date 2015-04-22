@@ -35,17 +35,10 @@ randomComputerMove board = do
 	let result = makeMove board row sticks
 	case result of 
 		Nothing -> do
-			--randomComputerMove board
-                        return "A"
+			randomComputerMove board
 		Just board -> do
 			if (gameOver board)
 				then do
 					return "Sorry. The computer wins."
 				else
 					humanMove board
-
-firstRowWithSticks :: [Int] -> Int
-firstRowWithSticks board
-	| ((sticksInRow 1 board) > 0) = 1
-	| ((sticksInRow 2 board) > 0) = 2
-	| ((sticksInRow 3 board) > 0) = 3
