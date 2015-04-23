@@ -39,7 +39,8 @@ smartComputerMove board = do
 			if (gameOver board)
 				then do
 					return "Sorry. The computer wins."
-				else
+				else do
+					putStrLn "Board after computer move:"
 					humanMove board
                                          
 sumRow :: (Num b, Bits b) => [b] -> b										 
@@ -53,6 +54,5 @@ smartMove board parity
 	| (xor 0 (head board)) > ((xor (head board) parity)) = makeMove board 1 (parity - head board)
 	| (xor 0 (board !! 1)) > ((xor (board !! 1) parity)) = makeMove board 2 (parity - board !! 1)
 	| (xor 0 (last board)) > ((xor (last board) parity)) = makeMove board 3 (parity - last board)
-	|(board !! 0 == 1) && (board !! 1 == 0) && (board !! 2 == 1) = makeMove board 1 1
 	| otherwise = Nothing
 	

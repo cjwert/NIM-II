@@ -40,5 +40,6 @@ randomComputerMove board = do
 			if (gameOver board)
 				then do
 					return "Sorry. The computer wins."
-				else
+				else do
+					putStrLn "Board after computer move:"
 					humanMove board
