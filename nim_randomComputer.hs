@@ -1,4 +1,4 @@
---nim_dumbComputer.hs
+--nim_randomComputer.hs
 
 module Random where
 
