@@ -53,17 +53,6 @@ firstRowWithSticks board
 	| ((sticksInRow 2 board) > 0) = 2
 	| ((sticksInRow 3 board) > 0) = 3
 
---getInt :: IO Int
---getInt = do
---	putStrLn "Enter a Number: "
---	input <- try getLine
---	case input of
---		Left (SomeException e) -> do
---			putStrLn $ "Invalid input." ++ show e
---			getInt
---		Right valid -> do
---			return (read valid :: Int)
-
 getInt :: String -> IO Int
 getInt message = do
 	putStrLn message
@@ -74,20 +63,3 @@ getInt message = do
 			getInt message
 		[(n,_)] -> do
 			return n
-
-
---GRADING CRITERIA
---TODO(2) Display NIM to start the game
---TODO(4) Display the board as rows of Xs. Should display before human's turn and also before the computer's turn. Be sure to display the row number.
---TODO(4) Prompt the user and accept a row
---TODO(2) Ensure the row number is valid
---TODO(2) Ensure the row contains sticks
---TODO(2) Prompt the user and accept a number of sticks
---TODO(6) Update the game state (board) based on row and # sticks
---TODO(4) Detect if the human wins, display a message
---TODO(4) Detect if the computer wins, display a message
---TODO(5) Include type signatures for all methods
-
---TODO(10) The "dumb" computer player always chooses the first row that contains any sticks, and takes all the sticks in that row
---TODO(15) The "random" computer randomly selects a valid row and a number of sticks that does not exceed the available sticks in that row.
---TODO(15) The "smart" computer always wins. Do not use trial and error.
