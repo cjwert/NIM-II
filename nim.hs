@@ -11,7 +11,6 @@ stringBoard :: [Int] -> String
 stringBoard board = "\n1: " ++ stringSticks (board !! 0) ++ "\n2: " ++ stringSticks (board !! 1) ++ "\n3: " ++ stringSticks (board !! 2) ++ "\n"
 
 stringSticks :: Int -> String
-stringSticks 1 = "X"
 stringSticks 0 = ""
 stringSticks n = "X" ++ stringSticks (n - 1)
 

@@ -29,7 +29,7 @@ humanMove board = do
 dumbComputerMove :: [Int] -> IO String
 dumbComputerMove board = do
 	printBoard board
-	let row = 1
+	let row = firstRowWithSticks board
 	let sticks = sticksInRow row board
 	let result = makeMove board row sticks
 	case result of 
