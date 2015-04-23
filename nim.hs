@@ -1,7 +1,6 @@
 --Christian Wert and Jacob Adelgren
 
 module NIM where
-
 import Control.Exception
 
 printBoard :: [Int] -> IO ()

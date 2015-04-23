@@ -41,7 +41,7 @@ smartComputerMove board = do
 					return "Sorry. The computer wins."
 				else
 					humanMove board
-                                         
+
 sumRow :: (Num b, Bits b) => [b] -> b										 
 sumRow board = foldr xor 0 board
 
