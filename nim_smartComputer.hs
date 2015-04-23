@@ -39,7 +39,8 @@ smartComputerMove board = do
 			if (gameOver board)
 				then do
 					return "Sorry. The computer wins."
-				else
+				else do
+					putStrLn "Board after computer move:"
 					humanMove board
 
 sumRow :: (Num b, Bits b) => [b] -> b										 
