@@ -47,6 +47,11 @@ gameOver board
 	| sum board == 0 = True
 	| otherwise = False
 	
+firstRowWithSticks :: [Int] -> Int
+firstRowWithSticks board
+	| ((sticksInRow 1 board) > 0) = 1
+	| ((sticksInRow 2 board) > 0) = 2
+	| ((sticksInRow 3 board) > 0) = 3
 
 --getInt :: IO Int
 --getInt = do

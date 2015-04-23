@@ -2,7 +2,8 @@
 module Smart where
 
 import NIM
-import System.Random
+import Data.Bits
+
 
 main = do
 	putStrLn "Welcome to NIM\n"
@@ -29,9 +30,8 @@ humanMove board = do
 smartComputerMove :: [Int] -> IO String
 smartComputerMove board = do
 	printBoard board
-        let row = 1
-        let sticks = 1
-	let result = makeMove board row sticks
+	let parity = sumRow board
+	let result = smartMove board parity	
 	case result of 
 		Nothing -> do
 			smartComputerMove board
@@ -41,43 +41,15 @@ smartComputerMove board = do
 					return "Sorry. The computer wins."
 				else
 					humanMove board
-                                        
-rowSums :: Monad m => [Int] -> m [Int]                                      
-rowSums board = do
-        let one =to4Bit $ sticksInRow 1 board
-        let two = to4Bit $ sticksInRow 2 board
-        let three = to4Bit $ sticksInRow 3 board
-        let a = [ addBits (one !! 0) (two !! 0), addBits (one !! 1) (two !! 1), addBits (one !! 2) (two !! 2), addBits (one !! 03) (two !! 3) ] 
-        let b = [ addBits (a !! 0) (three !! 0), addBits (a !! 1) (three !! 1), addBits (a !! 2) (three !! 2), addBits (a !! 03) (three !! 3) ] 
-        return b
+                                                                             
+sumRow board = foldr xor 0 board
 
-addBits :: Int -> Int -> Int
-addBits 1 1 = 0
-addBits 1 0 = 1
-addBits 0 1 = 1
-addBits 0 0 = 0
-
---stableState :: (Num a, Eq a) => [a] -> Bool
-stableState board
-        | total == 0 = True
-        | otherwise = False
-        where total = foldr (+) 0 board
-        
-reduceRowOne board
-        | status = board
-        | otherwise = [ board !! 0 - 1] ++ tail board
-        where status = stableState (rowSums board)
-        
-
-
-to4Bit :: Int -> [Int]
-to4Bit x = replicate (4 - length ys) 0 ++ ys
-    where ys = toBinary x
-                             
-bitsToInt :: [Int] -> Int
-bitsToInt x = (2*2*2*(x !! 0)) + (2*2*(x !! 1)) + (2*(x !! 2)) + (1*(x !! 3))
-                             
--- following from http://stackoverflow.com/questions/9166148/how-to-implement-decimal-to-binary-function-in-haskell
-toBinary :: Int -> [ Int ]
-toBinary 0 = [ 0 ]
-toBinary n = toBinary ( n `quot` 2 ) ++ [ n `rem` 2 ]
+smartMove board parity
+	| ((head board - parity) >= 0) && ((xor 0 (head board)) < (xor (head board) parity)) = makeMove board 1 parity
+	| ((board !! 1 - parity) >= 0) && ((xor 0 (board !! 1)) < (xor (board !! 1) parity)) = makeMove board 2 parity
+	| ((last board - parity) >= 0) && ((xor 0 (last board)) < (xor (last board) parity)) = makeMove board 3 parity
+	| (xor 0 (head board)) > ((xor (head board) parity)) = makeMove board 1 (parity - head board)
+	| (xor 0 (board !! 1)) > ((xor (board !! 1) parity)) = makeMove board 2 (parity - board !! 1)
+	| (xor 0 (last board)) > ((xor (last board) parity)) = makeMove board 3 (parity - last board)
+	| otherwise = Nothing
+	

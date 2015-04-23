@@ -41,9 +41,3 @@ dumbComputerMove board = do
 					return "Sorry. The computer wins."
 				else
 					humanMove board
-
-firstRowWithSticks :: [Int] -> Int
-firstRowWithSticks board
-	| ((sticksInRow 1 board) > 0) = 1
-	| ((sticksInRow 2 board) > 0) = 2
-	| ((sticksInRow 3 board) > 0) = 3
