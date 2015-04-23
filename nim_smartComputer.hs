@@ -41,13 +41,15 @@ smartComputerMove board = do
 					return "Sorry. The computer wins."
 				else
 					humanMove board
-                                                                             
+                                         
+sumRow :: (Num b, Bits b) => [b] -> b										 
 sumRow board = foldr xor 0 board
 
+smartMove :: [Int] -> Int -> Maybe [Int]
 smartMove board parity
-	| ((head board - parity) >= 0) && ((xor 0 (head board)) < (xor (head board) parity)) = makeMove board 1 parity
-	| ((board !! 1 - parity) >= 0) && ((xor 0 (board !! 1)) < (xor (board !! 1) parity)) = makeMove board 2 parity
-	| ((last board - parity) >= 0) && ((xor 0 (last board)) < (xor (last board) parity)) = makeMove board 3 parity
+	| ((head board - parity) >= 0) && ((xor 0 (head board)) > (xor (head board) parity)) = makeMove board 1 parity
+	| ((board !! 1 - parity) >= 0) && ((xor 0 (board !! 1)) > (xor (board !! 1) parity)) = makeMove board 2 parity
+	| ((last board - parity) >= 0) && ((xor 0 (last board)) > (xor (last board) parity)) = makeMove board 3 parity
 	| (xor 0 (head board)) > ((xor (head board) parity)) = makeMove board 1 (parity - head board)
 	| (xor 0 (board !! 1)) > ((xor (board !! 1) parity)) = makeMove board 2 (parity - board !! 1)
 	| (xor 0 (last board)) > ((xor (last board) parity)) = makeMove board 3 (parity - last board)
